@@ -12,61 +12,64 @@
       justify-content: center;
       align-items: center;
       font-family: 'Great Vibes', cursive;
-      background: linear-gradient(45deg, #ff4d4d, #ff99cc, #ff6b6b, #ffb3b3);
-      background-size: 400%;
+      background: url('https://images.unsplash.com/photo-1501420196147-33aa803b74f4?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, linear-gradient(45deg, #ff4d4d, #ff99cc, #ff6b6b, #ffb3b3);
+      background-size: cover, 400%;
       animation: gradient 10s ease infinite;
       overflow: hidden;
       position: relative;
     }
 
     @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% { background-position: 0% 50%, 0% 50%; }
+      50% { background-position: 100% 50%, 100% 50%; }
+      100% { background-position: 0% 50%, 0% 50%; }
     }
 
     .container {
       text-align: center;
       position: relative;
       z-index: 2;
+      padding: 20px;
     }
 
     .text {
-      font-size: 4rem;
+      font-size: 5rem;
       color: #fff;
-      text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff99cc, 0 0 30px #ff6b6b;
+      text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff99cc, 0 0 35px #ff6b6b;
+      filter: brightness(1.2);
       opacity: 0;
       animation: glow 2s ease-in-out infinite alternate, fadeIn 2s ease-in-out forwards;
+      font-family: 'Dancing Script', cursive;
     }
 
     .text span {
       display: inline-block;
       opacity: 0;
-      animation: write 0.5s ease-in-out forwards;
+      animation: write 0.6s ease-in-out forwards;
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes write {
-      0% { opacity: 0; transform: translateY(20px) rotate(5deg); }
+      0% { opacity: 0; transform: translateY(30px) rotate(10deg); }
       100% { opacity: 1; transform: translateY(0) rotate(0); }
     }
 
     @keyframes glow {
-      0% { text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff99cc, 0 0 30px #ff6b6b; }
-      100% { text-shadow: 0 0 20px #ff4d4d, 0 0 30px #ff99cc, 0 0 40px #ff6b6b; }
+      0% { text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff99cc, 0 0 35px #ff6b6b; filter: brightness(1.2); }
+      100% { text-shadow: 0 0 25px #ff4d4d, 0 0 35px #ff99cc, 0 0 45px #ff6b6b; filter: brightness(1.5); }
     }
 
-    /* Rose and heart animation */
+    /* Rose and heart animation with wavy path */
     .rose, .heart {
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       background-size: contain;
-      animation: fall 8s linear infinite;
+      animation: wavyFall 10s linear infinite;
       opacity: 0;
       z-index: 1;
     }
@@ -79,25 +82,75 @@
       background-image: url('https://img.icons8.com/emoji/48/heart-suit.png');
     }
 
-    @keyframes fall {
+    @keyframes wavyFall {
       0% {
-        opacity: 0.7;
-        transform: translateY(-100vh) rotate(0deg);
+        opacity: 0.8;
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(0) translateX(50px) rotate(180deg);
       }
       100% {
         opacity: 0;
-        transform: translateY(100vh) rotate(360deg);
+        transform: translateY(100vh) translateX(0) rotate(360deg);
       }
+    }
+
+    /* Subtext */
+    .subtext {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out forwards 2s;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    /* Control panel */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 10px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .controls button, .controls select, .controls input {
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background: #ff4d4d;
+      color: #fff;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+
+    .controls input {
+      background: #fff;
+      color: #333;
     }
 
     /* Responsive design */
     @media (max-width: 600px) {
       .text {
-        font-size: 2rem;
+        font-size: 2.5rem;
+      }
+      .subtext {
+        font-size: 1.2rem;
       }
       .rose, .heart {
-        width: 20px;
-        height: 20px;
+        width: 25px;
+        height: 25px;
+      }
+      .controls {
+        bottom: 10px;
+        right: 10px;
+        width: 150px;
       }
     }
 
@@ -113,9 +166,24 @@
   <div id="particles-js"></div>
   <div class="container">
     <div class="text" id="animatedText"></div>
+    <div class="subtext" id="subtext">Dành cho Như Ngọc</div>
+  </div>
+  <div class="controls">
+    <button onclick="toggleMusic()">Bật/Tắt Nhạc</button>
+    <select onchange="changeGradient(this.value)">
+      <option value="default">Màu Hồng-Đỏ</option>
+      <option value="purple">Màu Tím-Hồng</option>
+      <option value="orange">Màu Cam-Đỏ</option>
+    </select>
+    <select onchange="changeFallSpeed(this.value)">
+      <option value="10">Tốc độ rơi: Bình thường</option>
+      <option value="5">Tốc độ rơi: Nhanh</option>
+      <option value="15">Tốc độ rơi: Chậm</option>
+    </select>
+    <input type="text" id="customMessage" placeholder="Nhập thông điệp" oninput="updateMessage(this.value)">
   </div>
   <audio id="backgroundMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
   </audio>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
@@ -125,45 +193,78 @@
     text.split('').forEach((char, index) => {
       const span = document.createElement('span');
       span.textContent = char;
-      span.style.animationDelay = `${index * 0.15}s`;
+      span.style.animationDelay = `${index * 0.2}s`;
       textElement.appendChild(span);
     });
 
     // Rose and heart animation
+    let fallSpeed = 10;
     function createFallingElement(type) {
       const element = document.createElement('div');
       element.classList.add(type);
       element.style.left = `${Math.random() * 100}vw`;
       element.style.animationDelay = `${Math.random() * 5}s`;
+      element.style.animationDuration = `${fallSpeed}s`;
       document.body.appendChild(element);
-      setTimeout(() => element.remove(), 8000);
+      setTimeout(() => element.remove(), fallSpeed * 1000);
     }
 
     setInterval(() => {
       createFallingElement('rose');
       createFallingElement('heart');
-    }, 500);
+    }, 400);
 
-    // Particles.js configuration
+    // Particles.js configuration with interactivity
     particlesJS('particles-js', {
       particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
+        number: { value: 100, density: { enable: true, value_area: 800 } },
         color: { value: '#ff99cc' },
         shape: { type: 'circle' },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
+        opacity: { value: 0.6, random: true },
+        size: { value: 4, random: true },
         line_linked: { enable: false },
-        move: { enable: true, speed: 2, direction: 'bottom', random: true }
+        move: { enable: true, speed: 3, direction: 'bottom', random: true }
       },
-      interactivity: { detect_on: 'canvas', events: { onhover: { enable: false } } }
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: { enable: true, mode: 'repulse' },
+          onclick: { enable: true, mode: 'push' }
+        }
+      }
     });
 
-    // Music control (play on user interaction due to browser restrictions)
+    // Music control
     const music = document.getElementById('backgroundMusic');
-    document.body.addEventListener('click', () => {
-      music.play().catch(() => console.log('Music playback blocked by browser'));
-    });
+    function toggleMusic() {
+      if (music.paused) {
+        music.play().catch(() => console.log('Music playback blocked'));
+      } else {
+        music.pause();
+      }
+    }
+
+    // Change gradient
+    function changeGradient(value) {
+      const gradients = {
+        default: 'linear-gradient(45deg, #ff4d4d, #ff99cc, #ff6b6b, #ffb3b3)',
+        purple: 'linear-gradient(45deg, #cc33ff, #ff99cc, #9966ff, #cc99ff)',
+        orange: 'linear-gradient(45deg, #ff4d4d, #ff9933, #ff6b6b, #ffcc66)'
+      };
+      document.body.style.background = `url('https://images.unsplash.com/photo-1501420196147-33aa803b74f4?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, ${gradients[value]}`;
+      document.body.style.backgroundSize = 'cover, 400%';
+    }
+
+    // Change fall speed
+    function changeFallSpeed(value) {
+      fallSpeed = parseInt(value);
+    }
+
+    // Update custom message
+    function updateMessage(value) {
+      document.getElementById('subtext').textContent = value || 'Dành cho Như Ngọc';
+    }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&Dancing+Script&display=swap" rel="stylesheet">
 </body>
 </html>
