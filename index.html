@@ -1,28 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Rain - Em yêu anh</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang tình yêu 💖</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: black;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
     }
 
-    html, body {
+    /* Login Screen */
+    #loginScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      background: linear-gradient(to bottom right, #111, #333);
+    }
+
+    #loginScreen input {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    #loginScreen button {
+      padding: 10px 20px;
+      background: pink;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Main App */
+    #mainApp {
+      display: none;
+      height: 100vh;
       width: 100%;
-      height: 100%;
-      background: #000;
       overflow: hidden;
-      font-family: 'Arial', sans-serif;
+      position: relative;
+      background: black;
     }
 
     .falling-text {
       position: absolute;
       top: -50px;
-      color: rgba(255, 192, 203, 0.9);
+      color: rgba(255,192,203,0.8);
       font-size: 18px;
       white-space: nowrap;
       animation: fall linear infinite;
@@ -36,44 +71,143 @@
         opacity: 0;
       }
     }
+
+    h1 {
+      text-align: center;
+      color: pink;
+      margin-top: 60px;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #yesBtn {
+      background-color: #ff4da6;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #555;
+      color: white;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      color: pink;
+      font-size: 20px;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
-<script>
-  // Danh sách câu "Anh yêu em" theo nhiều ngôn ngữ + biểu tượng trái tim
-  const messages = [
-    "Anh yêu em", "I love you", "Je t’aime", "Te amo", "Ich liebe dich",
-    "Ti amo", "Я тебя люблю", "愛してる", "사랑해", "Eu te amo", "Ég elska þig",
-    "मैं तुमसे प्यार करता हूँ", "我爱你", "Aku cinta kamu", "ฉันรักเธอ",
-    "Seni seviyorum", "Mahal kita", "אהבה", "حب", "❤️", "💖", "💘", "💗", "💕"
-  ];
+  <!-- Login Screen -->
+  <div id="loginScreen">
+    <h2>Đăng nhập vào thế giới tình yêu 💘</h2>
+    <input type="text" id="username" placeholder="Tên đăng nhập" />
+    <input type="password" id="password" placeholder="Mật khẩu" />
+    <button onclick="checkLogin()">Đăng nhập</button>
+    <p id="error" style="color: red; margin-top: 10px;"></p>
+  </div>
 
-  function createFallingText() {
-    const text = document.createElement("div");
-    text.className = "falling-text";
-    text.textContent = messages[Math.floor(Math.random() * messages.length)];
+  <!-- Main App -->
+  <div id="mainApp">
+    <h1>Em có yêu anh không? 💘</h1>
+    <div style="text-align: center;">
+      <button id="yesBtn" class="btn">Có 💖</button>
+      <button id="noBtn" class="btn">Không 😒</button>
+    </div>
+  </div>
 
-    // Vị trí, tốc độ, kích thước ngẫu nhiên
-    text.style.left = Math.random() * window.innerWidth + "px";
-    text.style.fontSize = (16 + Math.random() * 20) + "px";
-    text.style.animationDuration = (3 + Math.random() * 4) + "s";
-    text.style.opacity = 0.5 + Math.random() * 0.5;
+  <script>
+    // Login check
+    function checkLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const error = document.getElementById("error");
 
-    document.body.appendChild(text);
+      if (user === "phamnhungoc" && pass === "030104") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("mainApp").style.display = "block";
+        startRain();
+        startLoveQuestion();
+      } else {
+        error.textContent = "Sai tài khoản hoặc mật khẩu 😢";
+      }
+    }
 
-    // Tự xóa sau khi rơi xong
-    setTimeout(() => {
-      text.remove();
-    }, 8000);
-  }
+    // Mưa chữ yêu
+    const messages = [
+      "Anh yêu em", "I love you", "Je t’aime", "Te amo", "Ich liebe dich",
+      "Ti amo", "Я тебя люблю", "愛してる", "사랑해", "Eu te amo", "Ég elska þig",
+      "我爱你", "Aku cinta kamu", "Seni seviyorum", "Mahal kita", "אהבה", "حب", "❤️", "💗", "💘", "💖"
+    ];
 
-  // Tạo hiệu ứng liên tục
-  setInterval(createFallingText, 100);
-</script>
+    function startRain() {
+      setInterval(() => {
+        const text = document.createElement("div");
+        text.className = "falling-text";
+        text.textContent = messages[Math.floor(Math.random() * messages.length)];
+        text.style.left = Math.random() * window.innerWidth + "px";
+        text.style.fontSize = (14 + Math.random() * 20) + "px";
+        text.style.animationDuration = (3 + Math.random() * 4) + "s";
+        text.style.opacity = 0.3 + Math.random() * 0.7;
+        document.body.appendChild(text);
+        setTimeout(() => text.remove(), 8000);
+      }, 100);
+    }
 
-</body>
-</html>
+    // Logic câu hỏi "Yêu không"
+    function startLoveQuestion() {
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
 
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+      });
+
+      yesBtn.addEventListener("click", () => {
+        for (let i = 0; i < 150; i++) {
+          setTimeout(() => {
+            createHeart();
+          }, i * 20);
+        }
+      });
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = Math.random() * window.innerHeight + "px";
+      heart.style.fontSize = (20 + Math.random() * 30) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+  </script>
 </body>
 </html>
