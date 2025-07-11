@@ -1,270 +1,79 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Huy Hoàng Yêu Như Ngọc</title>
+  <title>Love Rain - Em yêu anh</title>
   <style>
-    body {
+    * {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Great Vibes', cursive;
-      background: url('https://images.unsplash.com/photo-1501420196147-33aa803b74f4?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, linear-gradient(45deg, #ff4d4d, #ff99cc, #ff6b6b, #ffb3b3);
-      background-size: cover, 400%;
-      animation: gradient 10s ease infinite;
-      overflow: hidden;
-      position: relative;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    @keyframes gradient {
-      0% { background-position: 0% 50%, 0% 50%; }
-      50% { background-position: 100% 50%, 100% 50%; }
-      100% { background-position: 0% 50%, 0% 50%; }
-    }
-
-    .container {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      padding: 20px;
-    }
-
-    .text {
-      font-size: 5rem;
-      color: #fff;
-      text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff99cc, 0 0 35px #ff6b6b;
-      filter: brightness(1.2);
-      opacity: 0;
-      animation: glow 2s ease-in-out infinite alternate, fadeIn 2s ease-in-out forwards;
-      font-family: 'Dancing Script', cursive;
-    }
-
-    .text span {
-      display: inline-block;
-      opacity: 0;
-      animation: write 0.6s ease-in-out forwards;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(40px) scale(0.8); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes write {
-      0% { opacity: 0; transform: translateY(30px) rotate(10deg); }
-      100% { opacity: 1; transform: translateY(0) rotate(0); }
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff99cc, 0 0 35px #ff6b6b; filter: brightness(1.2); }
-      100% { text-shadow: 0 0 25px #ff4d4d, 0 0 35px #ff99cc, 0 0 45px #ff6b6b; filter: brightness(1.5); }
-    }
-
-    /* Rose and heart animation with wavy path */
-    .rose, .heart {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background-size: contain;
-      animation: wavyFall 10s linear infinite;
-      opacity: 0;
-      z-index: 1;
-    }
-
-    .rose {
-      background-image: url('https://img.icons8.com/emoji/48/rose.png');
-    }
-
-    .heart {
-      background-image: url('https://img.icons8.com/emoji/48/heart-suit.png');
-    }
-
-    @keyframes wavyFall {
-      0% {
-        opacity: 0.8;
-        transform: translateY(-100vh) translateX(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(0) translateX(50px) rotate(180deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(100vh) translateX(0) rotate(360deg);
-      }
-    }
-
-    /* Subtext */
-    .subtext {
-      font-size: 1.8rem;
-      color: #fff;
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeIn 3s ease-in-out forwards 2s;
-      font-family: 'Great Vibes', cursive;
-    }
-
-    /* Control panel */
-    .controls {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px;
-      border-radius: 10px;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .controls button, .controls select, .controls input {
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      background: #ff4d4d;
-      color: #fff;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-    }
-
-    .controls input {
-      background: #fff;
-      color: #333;
-    }
-
-    /* Responsive design */
-    @media (max-width: 600px) {
-      .text {
-        font-size: 2.5rem;
-      }
-      .subtext {
-        font-size: 1.2rem;
-      }
-      .rose, .heart {
-        width: 25px;
-        height: 25px;
-      }
-      .controls {
-        bottom: 10px;
-        right: 10px;
-        width: 150px;
-      }
-    }
-
-    #particles-js {
-      position: absolute;
+    html, body {
       width: 100%;
       height: 100%;
-      z-index: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .falling-text {
+      position: absolute;
+      top: -50px;
+      color: rgba(255, 192, 203, 0.9);
+      font-size: 18px;
+      white-space: nowrap;
+      animation: fall linear infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="particles-js"></div>
-  <div class="container">
-    <div class="text" id="animatedText"></div>
-    <div class="subtext" id="subtext">Dành cho Như Ngọc</div>
-  </div>
-  <div class="controls">
-    <button onclick="toggleMusic()">Bật/Tắt Nhạc</button>
-    <select onchange="changeGradient(this.value)">
-      <option value="default">Màu Hồng-Đỏ</option>
-      <option value="purple">Màu Tím-Hồng</option>
-      <option value="orange">Màu Cam-Đỏ</option>
-    </select>
-    <select onchange="changeFallSpeed(this.value)">
-      <option value="10">Tốc độ rơi: Bình thường</option>
-      <option value="5">Tốc độ rơi: Nhanh</option>
-      <option value="15">Tốc độ rơi: Chậm</option>
-    </select>
-    <input type="text" id="customMessage" placeholder="Nhập thông điệp" oninput="updateMessage(this.value)">
-  </div>
-  <audio id="backgroundMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-  </audio>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script>
-    // Text animation
-    const text = "Huy Hoàng Yêu Như Ngọc";
-    const textElement = document.getElementById('animatedText');
-    text.split('').forEach((char, index) => {
-      const span = document.createElement('span');
-      span.textContent = char;
-      span.style.animationDelay = `${index * 0.2}s`;
-      textElement.appendChild(span);
-    });
 
-    // Rose and heart animation
-    let fallSpeed = 10;
-    function createFallingElement(type) {
-      const element = document.createElement('div');
-      element.classList.add(type);
-      element.style.left = `${Math.random() * 100}vw`;
-      element.style.animationDelay = `${Math.random() * 5}s`;
-      element.style.animationDuration = `${fallSpeed}s`;
-      document.body.appendChild(element);
-      setTimeout(() => element.remove(), fallSpeed * 1000);
-    }
+<script>
+  // Danh sách câu "Anh yêu em" theo nhiều ngôn ngữ + biểu tượng trái tim
+  const messages = [
+    "Anh yêu em", "I love you", "Je t’aime", "Te amo", "Ich liebe dich",
+    "Ti amo", "Я тебя люблю", "愛してる", "사랑해", "Eu te amo", "Ég elska þig",
+    "मैं तुमसे प्यार करता हूँ", "我爱你", "Aku cinta kamu", "ฉันรักเธอ",
+    "Seni seviyorum", "Mahal kita", "אהבה", "حب", "❤️", "💖", "💘", "💗", "💕"
+  ];
 
-    setInterval(() => {
-      createFallingElement('rose');
-      createFallingElement('heart');
-    }, 400);
+  function createFallingText() {
+    const text = document.createElement("div");
+    text.className = "falling-text";
+    text.textContent = messages[Math.floor(Math.random() * messages.length)];
 
-    // Particles.js configuration with interactivity
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 100, density: { enable: true, value_area: 800 } },
-        color: { value: '#ff99cc' },
-        shape: { type: 'circle' },
-        opacity: { value: 0.6, random: true },
-        size: { value: 4, random: true },
-        line_linked: { enable: false },
-        move: { enable: true, speed: 3, direction: 'bottom', random: true }
-      },
-      interactivity: {
-        detect_on: 'canvas',
-        events: {
-          onhover: { enable: true, mode: 'repulse' },
-          onclick: { enable: true, mode: 'push' }
-        }
-      }
-    });
+    // Vị trí, tốc độ, kích thước ngẫu nhiên
+    text.style.left = Math.random() * window.innerWidth + "px";
+    text.style.fontSize = (16 + Math.random() * 20) + "px";
+    text.style.animationDuration = (3 + Math.random() * 4) + "s";
+    text.style.opacity = 0.5 + Math.random() * 0.5;
 
-    // Music control
-    const music = document.getElementById('backgroundMusic');
-    function toggleMusic() {
-      if (music.paused) {
-        music.play().catch(() => console.log('Music playback blocked'));
-      } else {
-        music.pause();
-      }
-    }
+    document.body.appendChild(text);
 
-    // Change gradient
-    function changeGradient(value) {
-      const gradients = {
-        default: 'linear-gradient(45deg, #ff4d4d, #ff99cc, #ff6b6b, #ffb3b3)',
-        purple: 'linear-gradient(45deg, #cc33ff, #ff99cc, #9966ff, #cc99ff)',
-        orange: 'linear-gradient(45deg, #ff4d4d, #ff9933, #ff6b6b, #ffcc66)'
-      };
-      document.body.style.background = `url('https://images.unsplash.com/photo-1501420196147-33aa803b74f4?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, ${gradients[value]}`;
-      document.body.style.backgroundSize = 'cover, 400%';
-    }
+    // Tự xóa sau khi rơi xong
+    setTimeout(() => {
+      text.remove();
+    }, 8000);
+  }
 
-    // Change fall speed
-    function changeFallSpeed(value) {
-      fallSpeed = parseInt(value);
-    }
+  // Tạo hiệu ứng liên tục
+  setInterval(createFallingText, 100);
+</script>
 
-    // Update custom message
-    function updateMessage(value) {
-      document.getElementById('subtext').textContent = value || 'Dành cho Như Ngọc';
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&Dancing+Script&display=swap" rel="stylesheet">
+</body>
+</html>
+
 </body>
 </html>
